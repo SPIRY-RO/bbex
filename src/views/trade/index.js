@@ -359,10 +359,26 @@ class Trade extends Component {
   };
 
   componentWillUnmount() {
-    if (JSON.parse(sessionStorage.getItem('account'))) {
-      this.state.streamWS.close();
-      this.state.buyandsellWS.close();
-      this.state.userWs.close();
+    if (sessionStorage.getItem('account')) {
+      this.state.streamWS && this.state.streamWS.close();
+      this.state.buyandsellWS && this.state.buyandsellWS.close();
+      this.state.userWS && this.state.userWS.close();
+    }
+
+    const { coinList } = this.state;
+    if (coinList) {
+      const favoriteCoins = [];
+      Object.keys(coinList).forEach(key => {
+        coinList[key].forEach(coin => {
+          if (
+            coin.favorite &&
+            !favoriteCoins.includes(`${coin.coinMain}.${coin.coinOther}`)
+          ) {
+            favoriteCoins.push(`${coin.coinMain}.${coin.coinOther}`);
+          }
+        });
+      });
+      localStorage.setItem('favoriteCoins', JSON.stringify(favoriteCoins));
     }
   }
 
@@ -387,20 +403,7 @@ class Trade extends Component {
     }
   }
 
-  componentWillUnmount() {
-    const { coinList } = this.state;
-    if (coinList) {
-      const favoriteCoins = [];
-      Object.keys(coinList).forEach(key => {
-        coinList[key].forEach(coin => {
-          if (coin.favorite && !favoriteCoins.includes(`${coin.coinMain}.${coin.coinOther}`)) {
-            favoriteCoins.push(`${coin.coinMain}.${coin.coinOther}`);
-          }
-        });
-      });
-      localStorage.setItem('favoriteCoins', JSON.stringify(favoriteCoins));
-    }
-  }
+
 
   // 获取币种列表
   getCoinList = () => {
