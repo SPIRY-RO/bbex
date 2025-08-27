@@ -65,30 +65,19 @@ a:hover {
 
 .nav-bar {
     float: left;
-    margin-left: 10px;
-    margin-left: 0;
-    margin-bottom: 0;
+    line-height: 60px;
+    background: transparent;
+    border-bottom: none;
 }
-.nav-bar li {
-    float: left;
-    margin: 0 2px;
-}
-.nav-bar li a {
-    display: inline-block;
-    width: 86px;
-    height: 50px;
-    text-align: center;
-    border-bottom: 1px solid transparent;
-}
-.nav-bar li a:hover {
+.nav-bar .ant-menu-item-selected {
     color: rgb(170, 136, 89);
-    border-bottom-color: rgb(170, 136, 89);
+    border-bottom: 2px solid rgb(170, 136, 89);
 }
 
 .user-status {
     float: right;
 }
-.user-status .iconfont {
+.user-status .anticon {
     padding-right: 5px;
 }
 .user-status a {
@@ -111,20 +100,8 @@ a:hover {
     top: 0;
     right: 20px;
 }
-.select-bar .icon-jiantou_down:before {
-    display: inline-block;
-    transition: .2s ease-in;
-}
-.select-bar:hover .icon-jiantou_down:before{
-    transform: rotate(180deg);
-}
-.select-bar .icon-diqiu {
-    float: left;
-    margin-left: 5px;
-}
-.select-bar .icon-jiantou_down {
-    float: right;
-    margin-right: 5px;
+.select-bar .anticon {
+    margin: 0 5px;
 }
 
 

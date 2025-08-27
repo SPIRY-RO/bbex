@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
-import { Modal, message } from 'antd';
+import { Modal, message, Menu, Dropdown, Icon } from 'antd';
 import request from '../utils/request';
 
 import logo from '../logo.svg';
@@ -56,49 +56,51 @@ class Container extends Component {
     return (
       <div className="container">
         <header className="header">
-          <Link className="logo" to="/">
-            Asser & Co Exchange 
-          </Link>
-          <ul className="nav-bar">
-            <li>
+          <Link className="logo" to="/">SpiryEX</Link>
+          <Menu mode="horizontal" className="nav-bar" selectable={false}>
+            <Menu.Item key="trade">
               <Link to="/trade">Trade</Link>
-            </li>
-            <li>
+            </Menu.Item>
+            <Menu.Item key="c2c">
               <Link to="/c2c">Peer-2-Peer</Link>
-            </li>
-          </ul>
+            </Menu.Item>
+          </Menu>
           {!isLogin && (
             <div className="user-status">
-              <i className="iconfont icon-yonghu" />
-              <Link to="/signin">Sign-in</Link>
-              /
-              <Link to="/register">Register</Link>
+              <Icon type="user" />
+              <Link to="/signin">Sign-in</Link>/<Link to="/register">Register</Link>
             </div>
           )}
           {isLogin && (
-            <div className="user-status">
-              <div className="select-bar">
-                <i className="iconfont icon-yonghu" />
-                <i className="iconfont icon-jiantou_down" />
-                <span>用户中心</span>
-                <ul className="select-list">
-                  <li>
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="center">
                     <Link to="/user">用户中心</Link>
-                  </li>
-                  <li onClick={this.logout}>退出</li>
-                </ul>
-              </div>
-            </div>
+                  </Menu.Item>
+                  <Menu.Item key="logout" onClick={this.logout}>
+                    退出
+                  </Menu.Item>
+                </Menu>
+              }
+            >
+              <span className="user-status">
+                <Icon type="user" /> 用户中心 <Icon type="down" />
+              </span>
+            </Dropdown>
           )}
-          <div className="select-bar language">
-            <i className="iconfont icon-diqiu" />
-            <i className="iconfont icon-jiantou_down" />
-            <span>中文</span>
-            <ul className="select-list">
-              <li>中文</li>
-              <li>英文</li>
-            </ul>
-          </div>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key="zh">中文</Menu.Item>
+                <Menu.Item key="en">英文</Menu.Item>
+              </Menu>
+            }
+          >
+            <span className="select-bar language">
+              <Icon type="global" /> 中文 <Icon type="down" />
+            </span>
+          </Dropdown>
         </header>
 
         {this.props.children}
